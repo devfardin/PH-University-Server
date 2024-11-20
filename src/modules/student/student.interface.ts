@@ -1,8 +1,6 @@
-import { Schema, model, connect } from 'mongoose';
-
 export interface UserName {
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
 }
 export interface Guardian {
