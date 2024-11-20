@@ -29,5 +29,5 @@ const getAllStudentData = async(req:Request, res:Response)=>{
 
 export const StudentController={
     createStudent,
-    getAllStudentData
+    getAllStudentData,
 }
