@@ -32,4 +32,5 @@ export interface Student {
   presentAddress: string;
   permanentAddress: string;
   profile: string;
+  isActive: 'Active' | 'Blocked';
 }
