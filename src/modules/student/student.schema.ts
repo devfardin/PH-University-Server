@@ -5,6 +5,7 @@ import {
   Student,
   UserName,
 } from './student.interface';
+import { promises } from 'dns';
 
 const userNameSchema = new Schema<UserName>({
   firstName: { type: String, required: true },

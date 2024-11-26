@@ -7,6 +7,7 @@ router.post('/create-student', StudentController.createStudent);
 
 // get all student data from db
 router.get('/', StudentController.getAllStudentData);
+
 // get a Student from DB
 router.get('/:id', StudentController.getSingleStudentFromDB);
 
