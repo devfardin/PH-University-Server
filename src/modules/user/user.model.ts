@@ -1,34 +1,36 @@
-// import { z } from 'zod';
 import { TUser } from './user.interface';
-import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
-const userSchema = new Schema<TUser>({
-  id: {
-    type: String,
+const userSchema = new Schema<TUser>(
+  {
+    id: {
+      type: String,
+    },
+    password: {
+      type: String,
+      required: [true, 'Password is required'],
+    },
+    needsPasswordChange: {
+      type: Boolean,
+      default: true,
+    },
+    role: {
+      type: String,
+      enum: ['admin', 'student', 'faculty'],
+    },
+    status: {
+      type: String,
+      enum: ['in-progress', 'blocked'],
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
-  password: {
-    type: String,
-    required: [true, 'Password is required'],
+  {
+    timestamps: true,
   },
-  needsPasswordChange: {
-    type: Boolean,
-    default: true,
-  },
-  role: {
-    type: String,
-    enum: ['admin', 'student', 'faculty'],
-  },
-  status: {
-    type: String,
-    enum: ['in-progress', 'blocked'],
-  },
-  isDeleted: {
-    type: Boolean,
-    default: false,
-  },
-});
+);
 
 // export all user model function
-export const userModel = {
-  userSchema,
-};
+export const User = model<TUser>('user', userSchema);
