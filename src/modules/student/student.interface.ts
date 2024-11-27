@@ -1,5 +1,3 @@
-import { Model } from 'mongoose';
-
 export interface UserName {
   firstName: string;
   middleName?: string;
@@ -36,9 +34,3 @@ export interface Student {
   profile: string;
   isActive: 'Active' | 'Blocked';
 }
-
-export type StudentMethod = {
-  isUserExits(id: string): Promise<Student>;
-};
-
-export type StudentModel = Model<Student, Record<string, never>, StudentMethod>;

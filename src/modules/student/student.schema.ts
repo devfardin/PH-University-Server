@@ -5,7 +5,6 @@ import {
   Student,
   UserName,
 } from './student.interface';
-import { promises } from 'dns';
 
 const userNameSchema = new Schema<UserName>({
   firstName: { type: String, required: true },
@@ -35,7 +34,7 @@ const isBangladeshiPhone = (phone: string) => {
   return bdPhoneRegex.test(phone);
 };
 const emailValidation = (email: string) => {
-  const check = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const check = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
   return check.test(email);
 };
 
