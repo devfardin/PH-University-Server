@@ -4,7 +4,7 @@ import { TUser } from './user.interface';
 import { User } from './user.model';
 
 // Create New user
-const createUsersIntoDB = async (password: string, studentData:TStudent ) => {
+const createUsersIntoDB = async (password: string, studentData: TStudent) => {
   const userData: Partial<TUser> = {};
 
   // if password does not given, use default password from env
