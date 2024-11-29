@@ -4,7 +4,10 @@ import { userServices } from './user.service';
 const createNewUser = async (req: Request, res: Response) => {
   try {
     const userInfo = req.body;
-    const result = await userServices.createUsersIntoDB(userInfo);
+    const result = await userServices.createUsersIntoDB(
+      userInfo.password,
+      userInfo,
+    );
     res.status(200).json({
       status: true,
       message: 'User Successfull created',
