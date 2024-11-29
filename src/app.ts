@@ -11,7 +11,11 @@ app.use(cors());
 app.use('/api/v1/users', UserRouters);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('hello world');
+  res.status(200).json({
+    success: true,
+    message: 'Welcome to our server! The API is up and running smoothly. 🚀',
+    timestamp: `Started at ${new Date().toLocaleString()}`,
+  });
 });
 
 // console.log(process.cwd())
