@@ -23,6 +23,7 @@ const createUsersIntoDB = async (password: string, studentData: TStudent) => {
     const newStudent = await Student.create();
     return newStudent;
   }
+  // return
 };
 
 // export User Services function

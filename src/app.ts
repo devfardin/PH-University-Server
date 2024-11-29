@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 // application Routes
-app.use('/api/v1/users', UserRouters);
+app.use('/users', UserRouters);
 
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({
@@ -17,7 +17,5 @@ app.get('/', (req: Request, res: Response) => {
     timestamp: `Started at ${new Date().toLocaleString()}`,
   });
 });
-
-// console.log(process.cwd())
 
 export default app;
