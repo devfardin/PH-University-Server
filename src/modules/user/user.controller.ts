@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { userServices } from './user.service';
+import sendResponse from '../../app/utils/sendResponse';
+import httpStatus from 'http-status';
 
 const createNewUser = async (
   req: Request,
@@ -12,11 +14,17 @@ const createNewUser = async (
       userInfo.password,
       userInfo,
     );
-    res.status(200).json({
-      status: true,
-      message: 'User Successfull created',
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'User Successfully created',
       data: result,
     });
+    // res.status(200).json({
+    //   status: true,
+    //   message: 'User Successfull created',
+    //   data: result,
+    // });
   } catch (error) {
     next(error);
     // res.status(500).json({
