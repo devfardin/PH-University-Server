@@ -1,7 +1,11 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { StudentServices } from './student.service';
 
-const createStudent = async (req: Request, res: Response) => {
+const createStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const StudentInfo = req.body;
     const result = await StudentServices.createStudentIntoDB(StudentInfo);
@@ -11,11 +15,12 @@ const createStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      status: false,
-      message: 'Someting wrong please try again!',
-      error,
-    });
+    next(error);
+    // res.status(500).json({
+    //   status: false,
+    //   message: 'Someting wrong please try again!',
+    //   error,
+    // });
   }
 };
 
