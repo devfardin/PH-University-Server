@@ -20,7 +20,7 @@ const createUsersIntoDB = async (password: string, studentData: TStudent) => {
     // set id, _id as a user
     studentData.id = newUser.id;
     studentData.user = newUser._id;
-    const newStudent = await Student.create();
+    const newStudent = await Student.create(studentData);
     return newStudent;
   }
   // return

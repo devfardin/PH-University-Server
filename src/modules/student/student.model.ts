@@ -92,37 +92,37 @@ const StudentSchema = new Schema<TStudent, StudentModel>({
     type: String,
     required: [true, 'contact number is required'],
   },
-  profileImage: {
-    type: String,
-  },
-  isDeleted: {
-    type: Boolean,
-    default: false,
-  },
-  localGuardian: {
-    type: UserLocalGuardian,
-    required: [true, 'local guardiant information is required'],
-  },
-  guardian: {
-    type: Guardiant,
-  },
   emergencyContactNo: {
     type: String,
     required: [true, 'Emergency contact number is required'],
+  },
+  presentAddress: {
+    type: String,
+    trim: true,
   },
   permanentAddress: {
     type: String,
     trim: true,
   },
-  presentAddress: {
+  guardian: {
+    type: Guardiant,
+  },
+  localGuardian: {
+    type: UserLocalGuardian,
+    required: [true, 'local guardiant information is required'],
+  },
+  profileImage: {
     type: String,
-    trim: true,
   },
   addmissionSemester: {
     type: String,
     trim: true,
     required: [true, 'Semester is required'],
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 // export all user model function
-export const Student = model<TStudent>('user', StudentSchema);
+export const Student = model<TStudent>('students', StudentSchema);
