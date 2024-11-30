@@ -1,13 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
+import { RequestHandler } from 'express';
 import { userServices } from './user.service';
 import sendResponse from '../../app/utils/sendResponse';
 import httpStatus from 'http-status';
 
-const createNewUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const createNewUser: RequestHandler = async (req, res, next) => {
   try {
     const userInfo = req.body;
     const result = await userServices.createUsersIntoDB(
