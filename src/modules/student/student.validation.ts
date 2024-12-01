@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const studentNameSchema = z.object({
+const NameValidationSchema = z.object({
   firstName: z.string().refine((value) => /^[A-Z]/.test(value), {
     message: 'First Name Start a Capital letter',
   }),
@@ -14,7 +14,7 @@ const guardianValidationSchema = z.object({
   phoneNo: z.string(),
 });
 
-const StudentLocalGuardian = z.object({
+const LocalGuardianValidationSchema = z.object({
   name: z.string(),
   relation: z.string(),
   phoneNo: z.string(),
@@ -24,7 +24,7 @@ const createStudentValidationSchema = z.object({
   body: z.object({
     password: z.string(),
     student: z.object({
-      name: studentNameSchema,
+      name: NameValidationSchema,
       gender: z.enum(['male', 'female', 'other']),
       dateOfBirth: z.string(),
       email: z.string().email(),
@@ -33,7 +33,7 @@ const createStudentValidationSchema = z.object({
       presentAddress: z.string(),
       permanentAddress: z.string(),
       guardian: guardianValidationSchema,
-      localGuardian: StudentLocalGuardian,
+      localGuardian: LocalGuardianValidationSchema,
       profileImage: z.string(),
       addmissionSemester: z.string(),
     }),
