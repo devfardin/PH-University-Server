@@ -1,7 +1,19 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { userController } from './user.controller';
+import { AnyZodObject } from 'zod';
 const router = express.Router();
 
-router.post('/', userController.createNewUser);
+const validationRequest = (schema: AnyZodObject) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    // validation
+    const zodParsedData = await schema.parseAsync({
+        {
+          body: req.body
+        }
+    })
+  };
+};
+
+router.post('/', validationRequest('Fardin'), userController.createNewUser);
 
 export const UserRouters = router;
