@@ -1,4 +1,4 @@
-type TMonthName =
+export type TMonths =
   | 'January'
   | 'February'
   | 'March'
@@ -11,10 +11,12 @@ type TMonthName =
   | 'October'
   | 'November'
   | 'December';
+export type TAcademicSemsterName = 'Autumn' | 'Summar' | 'fall';
+export type TAcademicSemsterCode = '01' | '02' | '03';
 export interface TAcademicSemseter {
-  name: 'Autumn' | 'Summar' | 'fall';
-  code: '01' | '02' | '03';
+  name: TAcademicSemsterName;
+  code: TAcademicSemsterCode;
   year: Date;
-  startMonth: TMonthName;
-  endMonth: TMonthName;
+  startMonth: TMonths;
+  endMonth: TMonths;
 }
