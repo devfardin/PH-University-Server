@@ -1,9 +1,17 @@
 import { z } from 'zod';
-import { AcademicSemsterName } from './academicSemester.model';
+import {
+  AcademicSemseterCode,
+  AcademicSemsterName,
+  Months,
+} from './academicSemester.constant';
 
 const createAcdemicSemesterValidationSchema = z.object({
   body: z.object({
-    name: z.enum(AcademicSemsterName),
+    name: z.enum([...AcademicSemsterName] as [string, ...string[]]),
+    code: z.enum([...AcademicSemseterCode] as [string, ...string[]]),
+    year: z.date(),
+    startMonth: z.enum([...Months] as [string, ...string[]]),
+    endMonth: z.enum([...Months] as [string, ...string[]]),
   }),
 });
 
