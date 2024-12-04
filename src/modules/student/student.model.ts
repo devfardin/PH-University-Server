@@ -115,7 +115,8 @@ const StudentSchema = new Schema<TStudent, StudentModel>({
     type: String,
   },
   addmissionSemester: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicSemester',
     trim: true,
     required: [true, 'Semester is required'],
   },

@@ -1,4 +1,5 @@
 import config from '../../app/config';
+import { TAcademicSemseter } from '../academicSemester/academicSemester.interface';
 import { TStudent } from '../student/student.inferface';
 import { Student } from '../student/student.model';
 import { TUser } from './user.interface';
@@ -11,7 +12,14 @@ const createUsersIntoDB = async (password: string, studentData: TStudent) => {
   // if password does not given, use default password from env
   userData.password = password || (config.default_password as string);
   userData.role = 'student';
-  userData.id = '203012003';
+
+  // Generated student id
+  const generateStudentId = (payload: TAcademicSemseter) => {
+
+  };
+
+
+  userData.id = generateStudentId();
 
   // create a user
   const newUser = await User.create(userData);
