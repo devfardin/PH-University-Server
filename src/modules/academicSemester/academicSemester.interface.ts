@@ -16,7 +16,11 @@ export type TAcademicSemsterCode = '01' | '02' | '03';
 export interface TAcademicSemseter {
   name: TAcademicSemsterName;
   code: TAcademicSemsterCode;
-  year: Date;
+  year: string;
   startMonth: TMonths;
   endMonth: TMonths;
 }
+
+export type TAcademicSemesterNameCodeMapper = {
+  [key: string]: string,
+};

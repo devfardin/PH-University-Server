@@ -25,7 +25,7 @@ const AcademicSemesterSchema = new Schema<TAcademicSemseter>(
       required: [true, 'Semester code is required'],
     },
     year: {
-      type: Date,
+      type: String,
       required: [true, 'Semester year is required'],
     },
     startMonth: {
@@ -43,6 +43,18 @@ const AcademicSemesterSchema = new Schema<TAcademicSemseter>(
     timestamps: true,
   },
 );
+
+// give error when will be save name and same year to created new semester
+AcademicSemesterSchema.pre('save', async function (next) {
+  const isSemesterExists = await AcademicSemester.findOne({
+    year: this.year,
+    name: this.name,
+  });
+  if (isSemesterExists) {
+    throw new Error('Semester Already Created');
+  }
+  next();
+});
 
 export const AcademicSemester = model<TAcademicSemseter>(
   'accademicSemester',
