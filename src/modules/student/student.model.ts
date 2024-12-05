@@ -124,4 +124,4 @@ const StudentSchema = new Schema<TStudent, StudentModel>({
   },
 });
 // export all user model function
-export const Student = model<TStudent>('students', StudentSchema);
+export const Student = model<TStudent>('Students', StudentSchema);
