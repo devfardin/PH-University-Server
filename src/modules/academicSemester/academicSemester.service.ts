@@ -10,7 +10,20 @@ const createAcademicSemesterIntoDB = async (payload: TAcademicSemseter) => {
   const result = await AcademicSemester.create(payload);
   return result;
 };
+// get All Semester from Database
+const getAllAcademicSemesterFromDB = async () => {
+  const result = AcademicSemester.find();
+  return result;
+};
+
+// Get Single Academic Semester form Database
+const getSingleSemeserFromDB = async (Id: string) => {
+  const result = AcademicSemester.findById(Id);
+  return result;
+};
 
 export const AcademicSemesterServices = {
   createAcademicSemesterIntoDB,
+  getAllAcademicSemesterFromDB,
+  getSingleSemeserFromDB,
 };

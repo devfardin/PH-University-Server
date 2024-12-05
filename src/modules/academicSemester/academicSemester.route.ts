@@ -5,6 +5,7 @@ import { AcademicSemesterValidations } from './acedemicSemester.validation';
 
 const router = express.Router();
 
+// Create New Academic Semester in to DB
 router.post(
   '/create-academic-semester',
   validationRequest(
@@ -12,5 +13,7 @@ router.post(
   ),
   AcademicSemesterController.createAcademicSemester,
 );
+// get all academic semester from Database
+router.get('/', AcademicSemesterController.GetAllAcademicSemesters);
 
 export const AcademicSemesterRouters = router;

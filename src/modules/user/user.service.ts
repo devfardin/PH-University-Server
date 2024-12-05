@@ -14,10 +14,7 @@ const createUsersIntoDB = async (password: string, studentData: TStudent) => {
   userData.role = 'student';
 
   // Generated student id
-  const generateStudentId = (payload: TAcademicSemseter) => {
-
-  };
-
+  const generateStudentId = (payload: TAcademicSemseter) => {};
 
   userData.id = generateStudentId();
 
