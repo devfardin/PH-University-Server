@@ -6,7 +6,7 @@ const createAcademicFacultyIntoDB = async (payload: TAcademicFaculty) => {
   return result;
 };
 // get All Academic Faculty form Database
-const getAcademicFacultyFromDB = async () => {
+const getALLAcademicFacultyFromDB = async () => {
   const result = await AcademicFaculty.find();
   return result;
 };
@@ -28,7 +28,7 @@ const updateAcademicFacultyIntoDB = async (
 
 export const academicFacultyServices = {
   createAcademicFacultyIntoDB,
-  getAcademicFacultyFromDB,
+  getALLAcademicFacultyFromDB,
   getSingleAcademicFacultyFromDB,
   updateAcademicFacultyIntoDB,
 };
