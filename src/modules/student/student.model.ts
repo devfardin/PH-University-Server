@@ -34,7 +34,6 @@ const UserLocalGuardian = new Schema<TLocalGuardian>({
   },
   phoneNo: {
     type: String,
-    unique: true,
     required: [true, 'local Guardiant number is required'],
   },
 });
@@ -51,7 +50,6 @@ const Guardiant = new Schema<TGuardian>({
   },
   phoneNo: {
     type: String,
-    unique: true,
     required: [true, 'Parents number is required'],
   },
 });
