@@ -16,4 +16,7 @@ router.post(
 // get all academic semester from Database
 router.get('/', AcademicSemesterController.GetAllAcademicSemesters);
 
+// get Single academic semester from Database
+router.get('/:semesterId', AcademicSemesterController.getSingleSemester);
+
 export const AcademicSemesterRouters = router;
