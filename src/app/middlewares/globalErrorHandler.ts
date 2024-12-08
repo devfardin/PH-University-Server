@@ -9,9 +9,9 @@ const globalErrorHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  // const message = error.message || 'Internal Server Error';
+  const statusCode = error.status || 500;
 
-  res.status(500).json({
+  res.status(statusCode).json({
     success: false,
     message: error.message || 'Internal Server Error',
     error,

@@ -54,10 +54,22 @@ const updateAcademicFaculty = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const deleteAcademicFacultyFromDB = catchAsync(async (req, res) => {
+  const { facultyId } = req.params;
+  const result =
+    await academicFacultyServices.deleteAcademicFacultyIntoDB(facultyId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Academic Faculty is Deleted successfully',
+    data: result,
+  });
+});
 
 export const academicFacultyController = {
   createAcademicFaculty,
   getAllAcademicFaculties,
   getSingleAcademicFaculty,
   updateAcademicFaculty,
+  deleteAcademicFacultyFromDB,
 };

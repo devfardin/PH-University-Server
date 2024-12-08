@@ -25,10 +25,19 @@ const updateAcademicFacultyIntoDB = async (
   });
   return result;
 };
+// Delete academic faculty in database
+const deleteAcademicFacultyIntoDB = async (facultyId: string) => {
+  // if (!facultyId) {
+  //   throw new Error('Faculty not found');
+  // }
+  const result = await AcademicFaculty.deleteOne({ _id: facultyId });
+  return result;
+};
 
 export const academicFacultyServices = {
   createAcademicFacultyIntoDB,
   getALLAcademicFacultyFromDB,
   getSingleAcademicFacultyFromDB,
   updateAcademicFacultyIntoDB,
+  deleteAcademicFacultyIntoDB,
 };
