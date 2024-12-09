@@ -64,7 +64,7 @@ const StudentSchema = new Schema<TStudent, StudentModel>({
     type: Schema.Types.ObjectId,
     required: [true, 'User Id is required'],
     unique: true,
-    ref: 'User',
+    ref: 'Users',
   },
   name: {
     type: UserNameSchema,
@@ -121,6 +121,10 @@ const StudentSchema = new Schema<TStudent, StudentModel>({
   isDeleted: {
     type: Boolean,
     default: false,
+  },
+  academicDepartment: {
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicDepartment',
   },
 });
 // export all user model function

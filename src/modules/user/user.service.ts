@@ -1,9 +1,11 @@
 import config from '../../app/config';
+import AppError from '../../app/errors/AppError';
 import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { TStudent } from '../student/student.inferface';
 import { Student } from '../student/student.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
+import httpStatus from 'http-status';
 import { generateStudentId } from './user.utils';
 
 // Create New user
@@ -19,7 +21,7 @@ const createUsersIntoDB = async (password: string, studentData: TStudent) => {
     studentData.addmissionSemester,
   );
   if (!admisstionSemester) {
-    throw new Error('Admisstion id not found');
+    throw new AppError(httpStatus.NOT_FOUND, 'admition id not found');
   }
 
   userData.id = await generateStudentId(admisstionSemester);
