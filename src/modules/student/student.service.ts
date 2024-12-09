@@ -22,7 +22,15 @@ const getAllStudentFromDB = async () => {
 };
 // get Student filter by id
 const getSingleStudenFromDB = async (id: string) => {
-  const result = await Student.findOne({ _id: id });
+  const result = await Student.findOne({ _id: id })
+    .populate('user')
+    .populate('addmissionSemester')
+    .populate({
+      path: 'academicDepartment',
+      populate: {
+        path: 'academicFaculty',
+      },
+    });
   return result;
 };
 // Export all function
