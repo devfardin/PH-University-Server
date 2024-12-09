@@ -8,6 +8,7 @@ const UserSchema = new Schema<TUser>(
     id: {
       type: String,
       unique: true,
+      required: [true, 'Student Id required'],
     },
     password: {
       type: String,
@@ -44,6 +45,5 @@ UserSchema.pre('save', async function (next) {
   );
   next();
 });
-
 // export all user model function
 export const User = model<TUser>('Users', UserSchema);

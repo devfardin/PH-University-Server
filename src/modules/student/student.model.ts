@@ -127,5 +127,6 @@ const StudentSchema = new Schema<TStudent, StudentModel>({
     ref: 'AcademicDepartment',
   },
 });
+
 // export all user model function
 export const Student = model<TStudent>('Students', StudentSchema);
