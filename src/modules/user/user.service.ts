@@ -9,7 +9,7 @@ import httpStatus from 'http-status';
 import { generateStudentId } from './user.utils';
 
 // Create New user
-const createUsersIntoDB = async (password: string, studentData: TStudent) => {
+const createUsersIntoDB = async (password: string, payload: TStudent) => {
   const userData: Partial<TUser> = {};
 
   // if password does not given, use default password from env
@@ -18,10 +18,14 @@ const createUsersIntoDB = async (password: string, studentData: TStudent) => {
 
   // Find Academic semester info
   const admisstionSemester = await AcademicSemester.findById(
-    studentData.addmissionSemester,
+    payload.addmissionSemester,
   );
+
+  try {
+  } catch (error) {}
+
   if (!admisstionSemester) {
-    throw new AppError(httpStatus.NOT_FOUND, 'admition id not found');
+    throw new AppError(httpStatus.NOT_FOUND, 'Admition id not found');
   }
 
   userData.id = await generateStudentId(admisstionSemester);
@@ -31,9 +35,9 @@ const createUsersIntoDB = async (password: string, studentData: TStudent) => {
 
   if (Object.keys(newUser).length) {
     // set id, _id as a user
-    studentData.id = newUser.id;
-    studentData.user = newUser._id;
-    const newStudent = await Student.create(studentData);
+    payload.id = newUser.id;
+    payload.user = newUser._id;
+    const newStudent = await Student.create(payload);
     return newStudent;
   }
   // return
