@@ -8,6 +8,7 @@ import config from '../config';
 import handleZodError from '../errors/handleZodError';
 import handleValidationError from '../errors/handleValidationError';
 import handleCatchError from '../errors/handleCatchError';
+import handleDuplicateError from '../errors/handleDuplicateError';
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   // Setting default values
@@ -33,6 +34,11 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     errorSources = simplifiedError?.errorSources;
   } else if (error.name === 'CastError') {
     const simplifiedError = handleCatchError(error);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorSources = simplifiedError.errorSources;
+  } else if (error.code === 11000) {
+    const simplifiedError = handleDuplicateError(error);
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorSources = simplifiedError.errorSources;
