@@ -66,6 +66,7 @@ const deleteStudentFromDB = async (id: string) => {
   } catch {
     await session.abortTransaction();
     await session.endSession();
+    throw new Error('Failed to delted student');
   }
 };
 // Export all function
