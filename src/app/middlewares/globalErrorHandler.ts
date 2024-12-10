@@ -1,28 +1,21 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ErrorRequestHandler } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
-const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
-  // Setting for default values
+const globalErrorHandler = (
+  error: any,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const statusCode = error.statusCode || 500;
-  const message = error.message || 'Someting want wrong';
-  type TErrorSource = {
-    path: string | number,
-    message: string | number,
-  }[];
-  const errorSources: TErrorSource = [
-    {
-      path: '',
-      message: 'Someting want wrong',
-    },
-  ];
+  const message = error.message || 'Internal Server Error';
 
   res.status(statusCode).json({
     success: false,
     message,
-    errorSources,
-    // error,
+    error,
   });
 };
 
