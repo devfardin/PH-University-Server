@@ -10,11 +10,12 @@ router.post(
   StudentControlles.createStudent,
 );
 router.get('/', StudentControlles.getAllStudentFromDB);
+
 router.get('/:studentId', StudentControlles.getSingleStudenFromDB);
 router.patch(
-  '/:studentId',
+  '/update/:studentId',
   validationRequest(StudentValidations.UpdateStudentValidationSchema),
-  StudentControlles.deleteStudentFromDB,
+  StudentControlles.updateStudentIntoDB,
 );
 router.patch('/:studentId', StudentControlles.deleteStudentFromDB);
 

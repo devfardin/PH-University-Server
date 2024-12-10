@@ -36,6 +36,10 @@ const getSingleStudenFromDB = async (id: string) => {
     });
   return result;
 };
+const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
+  const result = await Student.findOneAndUpdate({ id }, payload, { new: true });
+  return result;
+};
 const deleteStudentFromDB = async (id: string) => {
   const session = await mongoose.startSession();
   try {
@@ -53,13 +57,11 @@ const deleteStudentFromDB = async (id: string) => {
       { isDeleted: true },
       { new: true, session },
     );
-
     if (!deletedUser) {
       throw new AppError(httpStatus.NOT_MODIFIED, 'Failed to delete user');
     }
     await session.commitTransaction();
     await session.endSession();
-
     return deletedStudent;
   } catch {
     await session.abortTransaction();
@@ -72,4 +74,5 @@ export const StudentServices = {
   getAllStudentFromDB,
   getSingleStudenFromDB,
   deleteStudentFromDB,
+  updateStudentIntoDB,
 };
