@@ -12,15 +12,22 @@ const createStudentIntoDB = async (studentData: TStudent) => {
 
 // Get all student from database
 const getAllStudentFromDB = async (query: Record<string, unknown>) => {
+  const queryObj = { ...query };
+  const querySearchAbleFileds = ['email', 'name.firstName', 'presentAddress'];
   let searchTerm = '';
-  if (query.searchTerm) {
+  if (query?.searchTerm) {
     searchTerm = query?.searchTerm as string;
   }
-  const result = await Student.find({
-    $or: ['email', 'name.firstName', 'presentAddress'].map((field) => ({
+  const searchQuery = Student.find({
+    $or: querySearchAbleFileds.map((field) => ({
       [field]: { $regex: searchTerm, $options: 'i' },
     })),
-  })
+  });
+  // Filtering
+  const excludeFields = ['searchTerm'];
+  excludeFields.forEach((el) => delete queryObj[el]);
+  const result = await searchQuery
+    .find(queryObj)
     .populate('user')
     .populate('addmissionSemester')
     .populate({
