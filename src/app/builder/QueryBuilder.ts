@@ -10,7 +10,7 @@ class QueryBuilder<T> {
         ( this.query = query )
     }
     search(searchableFields: string[]){
-        const searchTerm = this?.query.searchTerm;
+        const searchTerm = this?.query?.searchTerm;
         if(searchTerm){
             this.modelQuery = this.modelQuery.find({
                 $or: searchableFields.map((field) => ({
@@ -46,7 +46,7 @@ class QueryBuilder<T> {
         return this
     }
     fields(){
-        const fields =  (this?.query?.fields as string).split(',').join(' ') || '-__v';
+        const fields =  (this?.query?.fields as string)?.split(',')?.join(' ') || '-__v';
         this.modelQuery = this.modelQuery.select(fields);
         return this;
     }
