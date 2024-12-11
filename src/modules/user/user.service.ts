@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import config from '../../app/config';
 import AppError from '../../app/errors/AppError';
 import { AcademicSemester } from '../academicSemester/academicSemester.model';
@@ -47,12 +48,11 @@ const createUsersIntoDB = async (password: string, payload: TStudent) => {
     await session.commitTransaction();
     await session.endSession();
     return newStudent;
-  } catch {
+  } catch (error: any) {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error('Failed to create new student');
+    throw new Error(error);
   }
-
   // return
 };
 

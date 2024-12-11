@@ -16,7 +16,9 @@ const createStudent = catchAsync(async (req, res) => {
 });
 // Get All student into Db
 const getAllStudentFromDB = catchAsync(async (req, res) => {
-  const result = await StudentServices.getAllStudentFromDB();
+  const query = req.query;
+
+  const result = await StudentServices.getAllStudentFromDB(query);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

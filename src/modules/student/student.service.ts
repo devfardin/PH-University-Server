@@ -11,8 +11,16 @@ const createStudentIntoDB = async (studentData: TStudent) => {
 };
 
 // Get all student from database
-const getAllStudentFromDB = async () => {
-  const result = await Student.find()
+const getAllStudentFromDB = async (query: Record<string, unknown>) => {
+  let searchTerm = '';
+  if (query.searchTerm) {
+    searchTerm = query?.searchTerm as string;
+  }
+  const result = await Student.find({
+    $or: ['email', 'name.firstName', 'presentAddress'].map((field) => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  })
     .populate('user')
     .populate('addmissionSemester')
     .populate({
@@ -87,7 +95,7 @@ const deleteStudentFromDB = async (id: string) => {
   } catch {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error('Failed to delted student');
+    throw new Error('Failed to deleted student');
   }
 };
 // Export all function
