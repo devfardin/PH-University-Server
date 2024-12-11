@@ -50,20 +50,28 @@ const getAllStudentFromDB = async (query: Record<string, unknown>) => {
   let limit = 1;
   let skip = 0;
 
+  // limitQuery
   if (query.limit) {
     limit = Number(query.limit);
   }
 
+  // paginateQuery
   if (query.page) {
     page = Number(query.page);
     skip = (page - 1) * limit;
   }
   const paginateQuery = sortQuery.skip(skip);
 
-  const limitQuery = await paginateQuery.limit(limit);
+  const limitQuery = paginateQuery.limit(limit);
+
   // field limiting
-  
-  return limitQuery;
+  let fields = '-__v';
+  if (query.fields) {
+    fields = (query.fields as string).split(',').join(' ');
+  }
+  const fieldQuery = await limitQuery.select(fields);
+
+  return fieldQuery;
 };
 // get Student filter by id
 const getSingleStudenFromDB = async (id: string) => {
