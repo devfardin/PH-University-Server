@@ -43,9 +43,21 @@ const deleteCourse = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const courseUpdate = catchAsync(async (req, res) => {
+  const { courseId } = req.params;
+  const body = req.body;
+  const result = await CourseService.updateCourseIntoDB(courseId, body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Course Update Successfully',
+    data: result,
+  });
+});
 export const courseController = {
   createCourses,
   getAllCourse,
   getSingleCourse,
   deleteCourse,
+  courseUpdate,
 };
