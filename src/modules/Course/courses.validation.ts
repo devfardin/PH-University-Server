@@ -8,9 +8,9 @@ const createCourseValidationSchema = z.object({
   body: z.object({
     title: z.string(),
     prefix: z.string(),
-    code: z.string(),
+    code: z.number(),
     creadits: z.number(),
-    preRequisiteCourses: z.array(PreRequisiteCourseCalidationSchema),
+    preRequisiteCourses: z.array(PreRequisiteCourseCalidationSchema).optional(),
   }),
 });
 export const CourseValidations = {
