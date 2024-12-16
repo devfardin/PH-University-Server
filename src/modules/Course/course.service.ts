@@ -60,6 +60,11 @@ const updateCourseIntoDB = async (
       },
     );
   }
+  // filter out the new course fields
+  const newPreRequisites = preRequisiteCourses?.filter(
+    (el) => el.course && !el.isDeleted,
+  );
+  console.log(newPreRequisites);
 
   return updatedBasicCourseInfo;
 };
