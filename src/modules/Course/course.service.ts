@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import QueryBuilder from '../../app/builder/QueryBuilder';
 import { CourseSearchAbleFields } from './course.constant';
 import { TCourse } from './course.interface';
-import { CourseModel } from './course.mode';
+import { CourseFacultyModel, CourseModel } from './course.mode';
 import AppError from '../../app/errors/AppError';
 import httpStatus from 'http-status';
 import { TCourseFaculty } from './course.interface';
@@ -118,7 +118,7 @@ const assignFacultiesWithCourseIntoBD = async (
   id: string,
   payload: Partial<TCourseFaculty>,
 ) => {
-  
+  const  result = await CourseFacultyModel.findByIdAndUpdate(id, {$addToSet: })
 };
 export const CourseService = {
   createCourses,
