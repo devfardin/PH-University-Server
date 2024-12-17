@@ -17,5 +17,6 @@ router.patch(
   validationRequest(CourseValidations.updateCourseValidationSchema),
   courseController.courseUpdate,
 );
+router.put('/:courseId/assign-faculties', courseController.)
 
 export const CourseRoutes = router;
