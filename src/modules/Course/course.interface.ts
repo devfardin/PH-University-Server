@@ -12,3 +12,7 @@ export type TCourse = {
   credits: number,
   isDeleted: boolean,
 };
+export type TCourseFaculty = {
+  course: Types.ObjectId,
+  faculties: [Types.ObjectId],
+};

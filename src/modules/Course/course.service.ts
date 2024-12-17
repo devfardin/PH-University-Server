@@ -112,6 +112,7 @@ const updateCourseIntoDB = async (
     throw new Error(error);
   }
 };
+const assignFacultiesIntoDB = async (id: string, payload:)
 export const CourseService = {
   createCourses,
   getAllCourseFromDB,
