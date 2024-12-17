@@ -6,6 +6,7 @@ import { TCourse } from './course.interface';
 import { CourseModel } from './course.mode';
 import AppError from '../../app/errors/AppError';
 import httpStatus from 'http-status';
+import { TCourseFaculty } from './course.interface';
 
 const createCourses = async (payload: TCourse) => {
   const result = await CourseModel.create(payload);
@@ -112,11 +113,18 @@ const updateCourseIntoDB = async (
     throw new Error(error);
   }
 };
-const assignFacultiesIntoDB = async (id: string, payload:)
+
+const assignFacultiesWithCourseIntoBD = async (
+  id: string,
+  payload: Partial<TCourseFaculty>,
+) => {
+  
+};
 export const CourseService = {
   createCourses,
   getAllCourseFromDB,
   getSingleCourseFromDB,
   deleteCourseFromDB,
   updateCourseIntoDB,
+  assignFacultiesWithCourseIntoBD,
 };

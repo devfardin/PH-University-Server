@@ -54,21 +54,25 @@ const courseUpdate = catchAsync(async (req, res) => {
     data: result,
   });
 });
-const assignFaculties = catchAsync(async (req, res)=> {
+const assignFacultiesWithCourse = catchAsync(async (req, res) => {
   const { courseId } = req.params;
-  const {faculties} = req.body;
-  const result = await CourseService.(courseId, faculties);
+  const { faculties } = req.body;
+  const result = await CourseService.assignFacultiesWithCourseIntoBD(
+    courseId,
+    faculties,
+  );
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Course Faculties Successfull updated',
     data: result,
-  })
-})
+  });
+});
 export const courseController = {
   createCourses,
   getAllCourse,
   getSingleCourse,
   deleteCourse,
   courseUpdate,
+  assignFacultiesWithCourse,
 };
