@@ -118,7 +118,17 @@ const assignFacultiesWithCourseIntoBD = async (
   id: string,
   payload: Partial<TCourseFaculty>,
 ) => {
-  const  result = await CourseFacultyModel.findByIdAndUpdate(id, {$addToSet: })
+  const result = await CourseFacultyModel.findByIdAndUpdate(
+    id,
+    {
+      $addToSet: { faculties: { $each: payload } },
+    },
+    {
+      upsert: true,
+      new: true,
+    },
+  );
+  return result;
 };
 export const CourseService = {
   createCourses,
