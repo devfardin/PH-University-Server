@@ -120,9 +120,7 @@ const assignFacultiesWithCourseIntoBD = async (
 ) => {
   const result = await CourseFacultyModel.findByIdAndUpdate(
     id,
-    {
-      $addToSet: { faculties: { $each: payload } },
-    },
+    { course: id, $addToSet: { faculties: { $each: payload } } },
     {
       upsert: true,
       new: true,
