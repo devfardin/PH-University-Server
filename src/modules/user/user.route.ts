@@ -5,6 +5,8 @@ import { userController } from './user.controller';
 import { AnyZodObject } from 'zod';
 const router = express.Router();
 
-router.post('/', userController.createNewUser);
+router.post('/create-student', userController.createNewUser);
+// Create Faculty
+router.post('/create-faculty', userController.createFacultyIntoDB);
 
 export const UserRouters = router;
