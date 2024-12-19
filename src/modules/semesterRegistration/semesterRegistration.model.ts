@@ -16,7 +16,7 @@ const semesterRegistrationSchema = new Schema<TSemesterRegistrantion>(
         values: SemesterRggistrationStatus,
         message: '{VALUE}',
       },
-      default: 'UpComing',
+      default: 'UPCOMING',
     },
     startDate: {
       type: Date,

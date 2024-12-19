@@ -1,5 +1,5 @@
 export const SemesterRggistrationStatus = [
-  'UpComing',
+  'UPCOMING',
   'ONGOING',
   'ENDED',
 ] as const;
