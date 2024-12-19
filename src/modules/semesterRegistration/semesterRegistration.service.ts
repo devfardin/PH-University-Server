@@ -4,6 +4,7 @@ import { TSemesterRegistrantion } from './semesterRegistration.interface';
 import httpStatus from 'http-status';
 import { SemesterRegistrationModel } from './semesterRegistration.model';
 import QueryBuilder from '../../app/builder/QueryBuilder';
+import { RegistrationStatus } from './semesterRegistration.constant';
 const createSemesterRegistratiiononIntoDB = async (
   payload: TSemesterRegistrantion,
 ) => {
@@ -73,15 +74,39 @@ const updateSemesterRegistration = async (
   }
   // If the request semester  registraction is EncodedAudioChunk, will will not update anything
   const currentSemesterStatus = isSemesterRegistrationExists.status;
-  
-  if (currentSemesterStatus === 'ENDED') {
+  const requestStatus = payload?.status;
+
+  if (currentSemesterStatus === RegistrationStatus.ENDED) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       `This semester is already ENDED`,
     );
   }
-  if(currentSemesterStatus === )
-
+  // UPCOMING --> ONGOING -> ENDED
+  if (
+    currentSemesterStatus === RegistrationStatus.UPCOMING &&
+    requestStatus === RegistrationStatus.ENDED
+  ) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `Your can not directly changed from ${currentSemesterStatus} to ${requestStatus}`,
+    );
+  }
+  if (
+    currentSemesterStatus === RegistrationStatus.ONGOING &&
+    requestStatus === RegistrationStatus.UPCOMING
+  ) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `Your can not directly changed from ${currentSemesterStatus} to ${requestStatus}`,
+    );
+  }
+  const result = await SemesterRegistrationModel.findByIdAndUpdate(
+    id,
+    payload,
+    { new: true, runValidators: true },
+  );
+  return result;
 };
 
 export const semesterRegistrationService = {
