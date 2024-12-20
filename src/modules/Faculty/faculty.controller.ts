@@ -4,6 +4,8 @@ import { facultyService } from './faculty.service';
 import httpStatus from 'http-status';
 
 const getALLFaculties = catchAsync(async (req, res) => {
+  console.log('text', req.user);
+
   const result = await facultyService.allFacultiesFromDB(req.query);
   sendResponse(res, {
     statusCode: httpStatus.OK,

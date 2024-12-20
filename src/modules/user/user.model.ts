@@ -13,6 +13,7 @@ const UserSchema = new Schema<TUser, UserModel>(
     password: {
       type: String,
       required: [true, 'Password is required'],
+      select: 0, // for remove client this field
     },
     needsPasswordChange: {
       type: Boolean,
@@ -53,6 +54,6 @@ UserSchema.statics.isPasswordMatch = async function (
   return await bcrypt.compare(plainTextPassword, hashedPassword);
 };
 UserSchema.statics.isUserExistsByCustomId = async function (id: string) {
-  return await User.findOne({ id });
+  return await User.findOne({ id }).select('+password'); // + for get all user fileds
 };
 export const User = model<TUser, UserModel>('Users', UserSchema);

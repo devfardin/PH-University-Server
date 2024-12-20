@@ -3,7 +3,7 @@ import AppError from '../../app/errors/AppError';
 import { User } from '../user/user.model';
 import { TLoginUser } from './auth.interface';
 import httpStatus from 'http-status';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 const loginUser = async (payload: TLoginUser) => {
   //   checking if the user is exist
 
@@ -29,7 +29,7 @@ const loginUser = async (payload: TLoginUser) => {
 
   // create token and sent to the client
   const jwtPayload = {
-    userId: isUserExist,
+    userId: isUserExist?.id,
     role: isUserExist.role,
   };
   const accessToken = jwt.sign(jwtPayload, config.jwt_access_token as string, {
@@ -43,6 +43,20 @@ const loginUser = async (payload: TLoginUser) => {
     needsPasswordChhange: isUserExist?.needsPasswordChange,
   };
 };
+const changePassword = async (
+  userData: JwtPayload,
+  payload: { oldPassword: string, newPassword: string },
+) => {
+  const result = await User.findOneAndUpdate(
+    {
+      id: userData.userId,
+      role: userData.role,
+    },
+    payload,
+  );
+  return result;
+};
 export const AuthServices = {
   loginUser,
+  changePassword,
 };
