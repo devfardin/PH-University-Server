@@ -11,15 +11,14 @@ const createOfferCourse = catchAsync(async (req, res) => {
     data: result,
   });
 });
-const getAllOfferdCourseFromDB = catchAsync(async(req, res) => {
-    
+// const getAllOfferdCourseFromDB = catchAsync(async(req, res) => {
 
-});
-const getSingleOfferedCourseFromDB = catchAsync(async(res, res)=> {
+// });
+// const getSingleOfferedCourseFromDB = catchAsync(async(res, res)=> {
 
-});
+// });
 export const OfferdCourseController = {
   createOfferCourse,
-  getAllOfferdCourseFromDB,
-  getSingleOfferedCourseFromDB,
+  //   getAllOfferdCourseFromDB,
+  //   getSingleOfferedCourseFromDB,
 };
