@@ -1,4 +1,5 @@
 import AppError from '../../app/errors/AppError';
+import { AcademicDepartmentModel } from '../academicDepartment/academicDepartment.model';
 import { AcademicFaculty } from '../academicFaculty/academicFaculty.model';
 import { CourseModel } from '../Course/course.mode';
 import { FacultyModel } from '../Faculty/faculty.model';
@@ -31,7 +32,7 @@ const createOfferCourseIntoBD = async (payload: TOfferedCourse) => {
   }
   // check Academic Department exists
   const isAcademicDepartmentExits =
-    await AcademicFaculty.findById(academicDepartment);
+    await AcademicDepartmentModel.findById(academicDepartment);
   if (!isAcademicDepartmentExits) {
     throw new AppError(
       httpStatus.NOT_FOUND,
@@ -46,7 +47,7 @@ const createOfferCourseIntoBD = async (payload: TOfferedCourse) => {
   // check Faculty exists
   const isFacultyExits = await FacultyModel.findById(faculty);
   if (!isFacultyExits) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Course is not found');
+    throw new AppError(httpStatus.NOT_FOUND, 'Faculty is not found');
   }
   const result = await OfferdCourseModel.create(payload);
   return result;
