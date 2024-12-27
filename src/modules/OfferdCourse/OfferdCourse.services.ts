@@ -103,11 +103,62 @@ const createOfferCourseIntoBD = async (payload: TOfferedCourse) => {
   });
   return result;
 };
+// Update Offered Course
+const updateOfferedCourseIntoDB = async (
+  id: string,
+  payload: Pick<TOfferedCourse, 'faculty' | 'days' | 'startTime' | 'endTime'>,
+) => {
+  const { faculty, days, startTime, endTime } = payload;
+  // check Offered course exists
+  const isOfferedCourseExists = await OfferdCourseModel.findById(id);
+  if (!isOfferedCourseExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Offered course not found');
+  }
+
+  // check Faculty are already exists
+  const facultieExists = await FacultyModel.findById(faculty);
+  if (!facultieExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'The Faculty not found');
+  }
+
+  const semesterRegistration = isOfferedCourseExists.semesterRegistration;
+  const semesterRegistrationStatus =
+    await SemesterRegistrationModel.findById(semesterRegistration);
+
+  if (semesterRegistrationStatus?.status !== 'UPCOMING') {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `You can not update this offred course as it is ${semesterRegistrationStatus?.status}`,
+    );
+  }
+  // get the secedule of the  faculties
+  const assignedSchedules = await OfferdCourseModel.find({
+    semesterRegistration,
+    faculty,
+    days: { $in: days },
+  }).select('days startTime endTime'); // select which fileld fetch in the function
+  const newSchedule = {
+    days,
+    startTime,
+    endTime,
+  };
+  if (hasTimeConflict(assignedSchedules, newSchedule)) {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      `This Faculty is not available at that time! choose other time or day`,
+    );
+  }
+  const result = await OfferdCourseModel.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
+  return result;
+};
 // const getAllOfferdCourseFromDB = async (query: Record<string, unknown>) => {};
 // const getSingleOfferedCourseFromDB = async (id: string) => {};
 // export all function
 export const OfferdCourseService = {
   createOfferCourseIntoBD,
+  updateOfferedCourseIntoDB,
   //   getAllOfferdCourseFromDB,
   //   getSingleOfferedCourseFromDB,
 };
