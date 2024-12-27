@@ -91,7 +91,12 @@ const createOfferCourseIntoBD = async (payload: TOfferedCourse) => {
     startTime,
     endTime,
   };
-  console.log(hasTimeConflict(assignedSchedules, newSchedule));
+  if (hasTimeConflict(assignedSchedules, newSchedule)) {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      `This Faculty is not available at that time! choose other time or day`,
+    );
+  }
 };
 // const getAllOfferdCourseFromDB = async (query: Record<string, unknown>) => {};
 // const getSingleOfferedCourseFromDB = async (id: string) => {};
