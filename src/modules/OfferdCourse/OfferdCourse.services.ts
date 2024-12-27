@@ -29,6 +29,8 @@ const createOfferCourseIntoBD = async (payload: TOfferedCourse) => {
       'Semester Registration is not found',
     );
   }
+  const academicSemester = isSemesterRegistrationExits.academicSemester;
+
   // check Academic Faculty exists
   const isAcademicFacultyExits =
     await AcademicFaculty.findById(academicFaculty);
@@ -84,8 +86,6 @@ const createOfferCourseIntoBD = async (payload: TOfferedCourse) => {
     faculty,
     days: { $in: days },
   }).select('days startTime endTime'); // select which fileld fetch in the function
-
-  // const result = await OfferdCourseModel.create(payload);
   const newSchedule = {
     days,
     startTime,
@@ -97,6 +97,11 @@ const createOfferCourseIntoBD = async (payload: TOfferedCourse) => {
       `This Faculty is not available at that time! choose other time or day`,
     );
   }
+  const result = await OfferdCourseModel.create({
+    ...payload,
+    academicSemester,
+  });
+  return result;
 };
 // const getAllOfferdCourseFromDB = async (query: Record<string, unknown>) => {};
 // const getSingleOfferedCourseFromDB = async (id: string) => {};

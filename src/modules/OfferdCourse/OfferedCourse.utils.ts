@@ -11,7 +11,6 @@ export const hasTimeConflict = (
     const newEndTime = new Date(`1970-01-01T${newSchedule.endTime}`);
 
     if (newStartTime < existingEndTime && newEndTime > existingStartTime) {
-      console.log('Yes');
       return true;
     }
   }
