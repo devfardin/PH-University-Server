@@ -53,6 +53,8 @@ UserSchema.statics.isPasswordMatch = async function (
 ) {
   return await bcrypt.compare(plainTextPassword, hashedPassword);
 };
+
+// if you select 0 for hidden spacify filed or some time you need this filed then you can use it.
 UserSchema.statics.isUserExistsByCustomId = async function (id: string) {
   return await User.findOne({ id }).select('+password'); // + for get all user fileds
 };
