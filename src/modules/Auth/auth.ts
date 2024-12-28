@@ -15,6 +15,8 @@ const auth = (...requiredRoles: TUserRole[]) => {
         'You are not Authorized User!',
       );
     }
+    // check token using try and catch
+    var decoded = jwt.verify(token, config.jwt_access_token as string);
     // check to valid token
     jwt.verify(
       token,
