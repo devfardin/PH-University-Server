@@ -61,5 +61,14 @@ UserSchema.statics.isPasswordMatch = async function (
 UserSchema.statics.isUserExistsByCustomId = async function (id: string) {
   return await User.findOne({ id }).select('+password'); // + for get all user fileds
 };
+// compire when user password change with jwt token issue date
+UserSchema.statics.isJWTIssuedBeforePasswordChanged = function (
+  passwordChangedTimestamp: Date,
+  jwtIssuedTimestamp: number,
+) {
+  const passwordChangedTime =
+    new Date(passwordChangedTimestamp).getTime() / 1000;
+  return passwordChangedTime > jwtIssuedTimestamp;
+};
 
 export const User = model<TUser, UserModel>('Users', UserSchema);

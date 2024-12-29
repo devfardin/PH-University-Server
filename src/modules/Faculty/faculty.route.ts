@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  auth(USER_ROLE.faculty, USER_ROLE.admin, USER_ROLE.student),
+  auth(USER_ROLE.faculty, USER_ROLE.admin),
   facultyController.getALLFaculties,
 );
 
