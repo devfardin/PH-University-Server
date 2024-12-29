@@ -5,7 +5,7 @@ const NameValidationSchema = z.object({
   firstName: z.string().refine((value) => /^[A-Z]/.test(value), {
     message: 'First Name Start a Capital letter',
   }),
-  middleName: z.string(),
+  middleName: z.string().optional(),
   lastName: z.string(),
 });
 

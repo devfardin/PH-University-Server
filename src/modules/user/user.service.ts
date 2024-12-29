@@ -20,6 +20,8 @@ const createUsersIntoDB = async (password: string, payload: TStudent) => {
   // if password does not given, use default password from env
   userData.password = password || (config.default_password as string);
   userData.role = 'student';
+  // set student email
+  userData.email = payload.email;
 
   // Find Academic semester info
   const admisstionSemester = await AcademicSemester.findById(
@@ -65,6 +67,9 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   userData.password = password || (config.default_password as string);
   // set Faculty role
   userData.role = 'faculty';
+
+  // set faculty email
+  userData.email = payload.email;
 
   // find academic department info
   const academicDepartment = await AcademicDepartmentModel.findById(

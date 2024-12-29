@@ -7,11 +7,7 @@ import auth from '../Auth/auth';
 import { USER_ROLE } from './user.constant';
 const router = express.Router();
 
-router.post(
-  '/create-student',
-  auth(USER_ROLE.admin),
-  userController.createNewUser,
-);
+router.post('/create-student', userController.createNewUser);
 // Create Faculty
 router.post('/create-faculty', userController.createFacultyIntoDB);
 
