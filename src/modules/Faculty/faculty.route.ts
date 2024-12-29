@@ -4,6 +4,10 @@ import auth from '../Auth/auth';
 import { USER_ROLE } from '../user/user.constant';
 const router = express.Router();
 
-router.get('/', auth(USER_ROLE.faculty), facultyController.getALLFaculties);
+router.get(
+  '/',
+  auth(USER_ROLE.faculty, USER_ROLE.admin),
+  facultyController.getALLFaculties,
+);
 
 export const FacultyRouter = router;

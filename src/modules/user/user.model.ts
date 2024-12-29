@@ -61,4 +61,5 @@ UserSchema.statics.isPasswordMatch = async function (
 UserSchema.statics.isUserExistsByCustomId = async function (id: string) {
   return await User.findOne({ id }).select('+password'); // + for get all user fileds
 };
+
 export const User = model<TUser, UserModel>('Users', UserSchema);
