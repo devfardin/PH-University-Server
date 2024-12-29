@@ -22,7 +22,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_token as string,
     ) as JwtPayload;
 
-    const { role, userId, iat } = decoded.role;
+    const { role, userId, iat } = decoded;
 
     //   checking if the user is exist
     const isUserExist = await User.isUserExistsByCustomId(userId);
