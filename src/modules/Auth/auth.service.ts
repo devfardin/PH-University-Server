@@ -5,6 +5,7 @@ import { TLoginUser } from './auth.interface';
 import httpStatus from 'http-status';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { createToken } from './auth.utils';
 const loginUser = async (payload: TLoginUser) => {
   //   checking if the user is exist
   const isUserExist = await User.isUserExistsByCustomId(payload.id);
@@ -32,9 +33,20 @@ const loginUser = async (payload: TLoginUser) => {
     userId: isUserExist?.id,
     role: isUserExist.role,
   };
-  const accessToken = jwt.sign(jwtPayload, config.jwt_access_token as string, {
-    expiresIn: '10d',
-  });
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_token as string,
+    '1d',
+  );
+  // const accessToken = jwt.sign(jwtPayload, config.jwt_access_token as string, {
+  //   expiresIn: '10d',
+  // });
+
+  const refreshToken = createToken(
+    jwtPayload,
+    config.JWT_REFRESH_token as string,
+    config.jwt_refresh_expires as string,
+  );
 
   //   Access Granted: send access token
 
