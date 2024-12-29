@@ -3,7 +3,7 @@ import AppError from '../../app/errors/AppError';
 import { User } from '../user/user.model';
 import { TLoginUser } from './auth.interface';
 import httpStatus from 'http-status';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { createToken } from './auth.utils';
 const loginUser = async (payload: TLoginUser) => {
@@ -36,7 +36,7 @@ const loginUser = async (payload: TLoginUser) => {
   const accessToken = createToken(
     jwtPayload,
     config.jwt_access_token as string,
-    '1d',
+    config.jwt_access_expires as string,
   );
   // const accessToken = jwt.sign(jwtPayload, config.jwt_access_token as string, {
   //   expiresIn: '10d',
@@ -52,6 +52,7 @@ const loginUser = async (payload: TLoginUser) => {
 
   return {
     accessToken,
+    refreshToken,
     needsPasswordChhange: isUserExist?.needsPasswordChange,
   };
 };

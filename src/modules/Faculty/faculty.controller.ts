@@ -4,7 +4,7 @@ import { facultyService } from './faculty.service';
 import httpStatus from 'http-status';
 
 const getALLFaculties = catchAsync(async (req, res) => {
-  console.log('text', req.user);
+  console.log('Refresh Token', req.cookies);
 
   const result = await facultyService.allFacultiesFromDB(req.query);
   sendResponse(res, {
