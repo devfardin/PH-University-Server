@@ -181,8 +181,8 @@ const forgetPassword = async (id: string) => {
     config.jwt_access_token as string,
     '10m',
   );
-  const resetUiLink = `http://localhost:6000?id=${isUserExist.id}&token=${resetToken}`;
-  sendEmail(resetUiLink);
+  const resetUiLink = `${config.reset_password_ui_link}?id=${isUserExist.id}&token=${resetToken}`;
+  sendEmail(isUserExist.email, resetUiLink);
 };
 export const AuthServices = {
   loginUser,
