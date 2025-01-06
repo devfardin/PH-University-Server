@@ -3,6 +3,7 @@ import sendResponse from '../../app/utils/sendResponse';
 import httpStatus from 'http-status';
 import { AuthServices } from './auth.service';
 import config from '../../app/config';
+import { date } from 'zod';
 
 const loginUser = catchAsync(async (req, res) => {
   const result = await AuthServices.loginUser(req.body);
@@ -53,9 +54,21 @@ const forgetPassword = catchAsync(async (req, res) => {
   });
 });
 
+const resetPassword = catchAsync(async (req, res) => {
+  const token = req.headers.authorization;
+  const result = await AuthServices.resetPassword(req.body, token);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Password Reset Succesfully',
+    data: result,
+  });
+});
+
 export const AuthController = {
   loginUser,
   changepassword,
   refreshToken,
   forgetPassword,
+  resetPassword,
 };
