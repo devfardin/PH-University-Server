@@ -3,7 +3,6 @@ import { userServices } from './user.service';
 import sendResponse from '../../app/utils/sendResponse';
 import httpStatus from 'http-status';
 import catchAsync from '../../app/utils/catchAsync';
-import AppError from '../../app/errors/AppError';
 
 const createNewUser: RequestHandler = async (req, res, next) => {
   try {
@@ -38,8 +37,7 @@ const createFacultyIntoDB = catchAsync(async (req, res) => {
 });
 
 const getMe = catchAsync(async (req, res) => {
-
-  const {userId, role} = req.user;
+  const { userId, role } = req.user;
   const result = await userServices.getMe(userId, role);
   sendResponse(res, {
     statusCode: httpStatus.OK,

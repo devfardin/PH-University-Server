@@ -12,7 +12,6 @@ import mongoose from 'mongoose';
 import { TFaculty } from '../Faculty/faculty.interface';
 import { AcademicDepartmentModel } from '../academicDepartment/academicDepartment.model';
 import { FacultyModel } from '../Faculty/faculty.model';
-import { verifyToken } from '../Auth/auth.utils';
 
 // Create New user
 const createUsersIntoDB = async (password: string, payload: TStudent) => {
