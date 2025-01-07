@@ -46,9 +46,21 @@ const getMe = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const changeUserStatus = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  const result = await userServices.changeUserStatus(id, body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Status is updated succesfully',
+    data: result,
+  });
+});
 // Export All Controulles function
 export const userController = {
   createNewUser,
   createFacultyIntoDB,
   getMe,
+  changeUserStatus,
 };

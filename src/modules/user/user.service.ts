@@ -122,9 +122,23 @@ const getMe = async (userId: string, role: string) => {
 
   return result;
 };
+const changeUserStatus = async (id: string, payload: { status: string }) => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Invalid ID');
+  }
+  const isExistUser = await User.findById(id);
+  if (!isExistUser) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User are not found');
+  }
+  const result = await User.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
+  return result;
+};
 // export User Services function
 export const userServices = {
   createUsersIntoDB,
   createFacultyIntoDB,
   getMe,
+  changeUserStatus,
 };
