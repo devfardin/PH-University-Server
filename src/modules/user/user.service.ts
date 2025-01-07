@@ -12,6 +12,7 @@ import mongoose from 'mongoose';
 import { TFaculty } from '../Faculty/faculty.interface';
 import { AcademicDepartmentModel } from '../academicDepartment/academicDepartment.model';
 import { FacultyModel } from '../Faculty/faculty.model';
+import { verifyToken } from '../Auth/auth.utils';
 
 // Create New user
 const createUsersIntoDB = async (password: string, payload: TStudent) => {
@@ -108,9 +109,23 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   }
 };
 
-const getMe = async (id: string, role: string) => {
-const result = await 
-}
+const getMe = async (token: string) => {
+  const decoded = verifyToken(token, config.jwt_access_token as string);
+  const { userId, role } = decoded;
+  let result = null;
+
+  if (role === 'student') {
+    result = await Student.findOne({ id: userId });
+  }
+  if (role === 'admin') {
+    // result = await AdminModel.findOne({ id: userId });
+  }
+  if (role === 'faculty') {
+    result = await FacultyModel.findOne({ id: userId });
+  }
+
+  return result;
+};
 // export User Services function
 export const userServices = {
   createUsersIntoDB,

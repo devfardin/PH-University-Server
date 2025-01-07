@@ -42,11 +42,17 @@ const getMe = catchAsync(async (req, res) => {
   if (!token) {
     throw new AppError(httpStatus.NOT_FOUND, 'Token not found');
   }
-  
-  const result = await userServices.getMe()
-})
+  const result = await userServices.getMe(token);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User Data Succesfully retrived',
+    data: result,
+  });
+});
 // Export All Controulles function
 export const userController = {
   createNewUser,
   createFacultyIntoDB,
+  getMe,
 };

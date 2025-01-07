@@ -1,12 +1,12 @@
-import config from '../../app/config';
-import AppError from '../../app/errors/AppError';
-import { User } from '../user/user.model';
-import { TLoginUser } from './auth.interface';
+import bcrypt from 'bcrypt';
 import httpStatus from 'http-status';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import { createToken } from './auth.utils';
+import config from '../../app/config';
+import AppError from '../../app/errors/AppError';
 import { sendEmail } from '../../app/utils/sendEmail';
+import { User } from '../user/user.model';
+import { TLoginUser } from './auth.interface';
+import { createToken, verifyToken } from './auth.utils';
 const loginUser = async (payload: TLoginUser) => {
   //   checking if the user is exist
   const isUserExist = await User.isUserExistsByCustomId(payload.id);
@@ -45,7 +45,7 @@ const loginUser = async (payload: TLoginUser) => {
 
   const refreshToken = createToken(
     jwtPayload,
-    config.JWT_REFRESH_token as string,
+    config.jwt_refresh_token as string,
     config.jwt_refresh_expires as string,
   );
 
@@ -108,10 +108,7 @@ const refreshToken = async (token: string) => {
   //   throw new AppError(httpStatus.UNAUTHORIZED, 'You are not Authorized User!');
   // }
   // check to valid token
-  const decoded = jwt.verify(
-    token,
-    config.JWT_REFRESH_token as string,
-  ) as JwtPayload;
+  const decoded = verifyToken(token, config.jwt_refresh_token as string);
 
   const { userId, iat } = decoded;
 
