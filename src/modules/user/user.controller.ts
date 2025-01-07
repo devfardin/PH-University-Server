@@ -3,6 +3,7 @@ import { userServices } from './user.service';
 import sendResponse from '../../app/utils/sendResponse';
 import httpStatus from 'http-status';
 import catchAsync from '../../app/utils/catchAsync';
+import AppError from '../../app/errors/AppError';
 
 const createNewUser: RequestHandler = async (req, res, next) => {
   try {
@@ -17,18 +18,8 @@ const createNewUser: RequestHandler = async (req, res, next) => {
       message: 'User Successfully created',
       data: result,
     });
-    // res.status(200).json({
-    //   status: true,
-    //   message: 'User Successfull created',
-    //   data: result,
-    // });
   } catch (error) {
     next(error);
-    // res.status(500).json({
-    //   status: false,
-    //   message: 'User not created please check your detailes',
-    //   error,
-    // });
   }
 };
 // Create Faculty
@@ -45,6 +36,15 @@ const createFacultyIntoDB = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+const getMe = catchAsync(async (req, res) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Token not found');
+  }
+  
+  const result = await userServices.getMe()
+})
 // Export All Controulles function
 export const userController = {
   createNewUser,

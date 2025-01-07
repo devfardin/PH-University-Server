@@ -11,4 +11,6 @@ router.post('/create-student', userController.createNewUser);
 // Create Faculty
 router.post('/create-faculty', userController.createFacultyIntoDB);
 
+router.get('/me', auth(USER_ROLE.admin, USER_ROLE.faculty, USER_ROLE.student), userController.)
+
 export const UserRouters = router;

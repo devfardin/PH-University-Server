@@ -108,8 +108,12 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   }
 };
 
+const getMe = async (id: string, role: string) => {
+const result = await 
+}
 // export User Services function
 export const userServices = {
   createUsersIntoDB,
   createFacultyIntoDB,
+  getMe,
 };
