@@ -109,13 +109,10 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   }
 };
 
-const getMe = async (token: string) => {
-  const decoded = verifyToken(token, config.jwt_access_token as string);
-  const { userId, role } = decoded;
+const getMe = async (userId: string, role: string) => {
   let result = null;
-
   if (role === 'student') {
-    result = await Student.findOne({ id: userId });
+    result = await Student.findOne({ id: userId }).populate('user');
   }
   if (role === 'admin') {
     // result = await AdminModel.findOne({ id: userId });
