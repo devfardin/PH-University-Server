@@ -10,7 +10,9 @@ const createNewUser: RequestHandler = async (req, res, next) => {
     const result = await userServices.createUsersIntoDB(
       userInfo.password,
       userInfo,
+      req.file,
     );
+
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import config from '../../app/config';
 import AppError from '../../app/errors/AppError';
@@ -12,9 +13,10 @@ import mongoose from 'mongoose';
 import { TFaculty } from '../Faculty/faculty.interface';
 import { AcademicDepartmentModel } from '../academicDepartment/academicDepartment.model';
 import { FacultyModel } from '../Faculty/faculty.model';
+import { sendImageToCloudinary } from '../../app/utils/sendImageToCloudinary';
 
 // Create New user
-const createUsersIntoDB = async (password: string, payload: TStudent) => {
+const createUsersIntoDB = async (password: string, payload: TStudent, file: any ) => {
   const userData: Partial<TUser> = {};
 
   // if password does not given, use default password from env
@@ -37,6 +39,13 @@ const createUsersIntoDB = async (password: string, payload: TStudent) => {
     session.startTransaction();
     userData.id = await generateStudentId(admisstionSemester);
 
+    // send image to cloudinary
+    const imageName = `${userData?.id}${payload?.name?.firstName}`;
+    const path = file.path;
+    
+    // Upload image in the img hosting server
+   const result  = await sendImageToCloudinary(imageName, path);
+
     // create a user
     const newUser = await User.create([userData], { session });
 
@@ -46,6 +55,8 @@ const createUsersIntoDB = async (password: string, payload: TStudent) => {
     // set id, _id as a user
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
+    payload.profileImage =(result as { secure_url: string }).secure_url;
+    
     const newStudent = await Student.create([payload], { session });
     if (!newStudent) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create student');
@@ -119,7 +130,6 @@ const getMe = async (userId: string, role: string) => {
   if (role === 'faculty') {
     result = await FacultyModel.findOne({ id: userId });
   }
-
   return result;
 };
 const changeUserStatus = async (id: string, payload: { status: string }) => {

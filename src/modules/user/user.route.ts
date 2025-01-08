@@ -7,9 +7,20 @@ import auth from '../Auth/auth';
 import { USER_ROLE } from './user.constant';
 import validationRequest from '../../app/middlewares/validateRequest';
 import { userValidation } from './user.validation';
+import { upload } from '../../app/utils/sendImageToCloudinary';
 const router = express.Router();
 
-router.post('/create-student', userController.createNewUser);
+router.post(
+  '/create-student',
+  // auth(USER_ROLE.faculty),
+  upload.single('file'),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data);
+    next();
+  },
+  // validationRequest()
+  userController.createNewUser,
+);
 // Create Faculty
 router.post('/create-faculty', userController.createFacultyIntoDB);
 
