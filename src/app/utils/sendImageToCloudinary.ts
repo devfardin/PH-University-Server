@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
 import config from '../config';
 import multer from 'multer';
+import fs from 'fs';
 export const sendImageToCloudinary = async (
   imageName: string,
   path: string,
@@ -23,6 +24,14 @@ export const sendImageToCloudinary = async (
           reject(error);
         }
         resolve(result);
+        // delete a file asynchronously
+        fs.unlink(path, (error) => {
+          if (error) {
+            reject(error);
+          } else {
+            console.log('File is deleted');
+          }
+        });
       },
     );
   });
