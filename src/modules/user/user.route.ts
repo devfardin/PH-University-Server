@@ -26,7 +26,7 @@ router.post('/create-faculty', userController.createFacultyIntoDB);
 
 router.put(
   '/change-status/:id',
-  auth(USER_ROLE.student),
+  auth(USER_ROLE.faculty),
   validationRequest(userValidation.changeUserStatusValidation),
   userController.changeUserStatus,
 );
