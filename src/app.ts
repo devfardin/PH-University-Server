@@ -10,9 +10,9 @@ import cookieParser from 'cookie-parser';
 const app: Application = express();
 // parsers
 app.use(express.json());
-app.use(cors());
 app.use(cookieParser());
-app.use(cors({ origin: ['http://localhost:6000', 'http://localhost:5173'] }));
+
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
 // application Routes
 app.use('/api/v1', router);
@@ -20,6 +20,7 @@ app.use('/api/v1', router);
 const test = async (req: Request, res: Response) => {
   Promise.reject();
 };
+
 app.get('/test', test);
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({

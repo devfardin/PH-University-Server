@@ -9,6 +9,7 @@ const loginUser = catchAsync(async (req, res) => {
   const { refreshToken, accessToken, needsPasswordChhange } = result;
   res.cookie('refreshToken', refreshToken, {
     secure: config.NODE_ENV === 'Production',
+    // secure: true,
     httpOnly: true,
   });
   sendResponse(res, {

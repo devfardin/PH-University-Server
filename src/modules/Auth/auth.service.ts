@@ -103,10 +103,11 @@ const changePassword = async (
   );
   return null;
 };
+
 const refreshToken = async (token: string) => {
-  // if (!token) {
-  //   throw new AppError(httpStatus.UNAUTHORIZED, 'You are not Authorized User!');
-  // }
+  if (!token) {
+    throw new AppError(httpStatus.UNAUTHORIZED, 'You are not Authorized User!');
+  }
   // check to valid token
   const decoded = verifyToken(token, config.jwt_refresh_token as string);
 
