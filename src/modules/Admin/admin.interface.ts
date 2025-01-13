@@ -1,5 +1,5 @@
-import { Types } from 'mongoose';
-
+/* eslint-disable no-unused-vars */
+import { Model, Types } from 'mongoose';
 export type TGender = 'male' | 'femail' | 'other';
 export type TBloodGroup =
   | 'A+'
@@ -31,6 +31,6 @@ export type TAdmin = {
   profile: string,
   isDeleted: boolean,
 };
-// export interface AdminModel extends Model<TAdmin> {
-//   isUserExists(id: string): promise<TAdmin> | null;
-// }
+export interface AdminModel extends Model<TAdmin> {
+  isUserExists(id: string): Promise<TAdmin> | null;
+}
