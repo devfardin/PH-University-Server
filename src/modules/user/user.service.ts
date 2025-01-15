@@ -8,12 +8,15 @@ import { Student } from '../student/student.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
 import httpStatus from 'http-status';
-import { generateFacultyId, generateStudentId } from './user.utils';
+import { generateAdminId, generateFacultyId, generateStudentId } from './user.utils';
 import mongoose from 'mongoose';
 import { TFaculty } from '../Faculty/faculty.interface';
 import { AcademicDepartmentModel } from '../academicDepartment/academicDepartment.model';
 import { FacultyModel } from '../Faculty/faculty.model';
 import { sendImageToCloudinary } from '../../app/utils/sendImageToCloudinary';
+import { TAdmin } from '../Admin/admin.interface';
+import { USER_ROLE } from './user.constant';
+import { AdminModel } from '../Admin/admin.model';
 
 // Create New user
 const createUsersIntoDB = async (password: string, payload: TStudent, file: any ) => {
@@ -118,6 +121,58 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
     throw new error(error);
   }
 };
+
+const createAdminIntoDB = async (
+  file: any,
+  password:string,
+  payload: TAdmin
+) => {
+  // create user object
+  const userData: Partial<TUser> = {};
+
+  // if password is not getEnvironmentData, use default password
+  userData.password = password || (config.default_password as string);
+
+  // set admin role
+  userData.role = USER_ROLE.admin;
+  
+  // set admin email
+  userData.email = payload.email;
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+    // set id generation
+    userData.id = await generateAdminId();
+    const imageName = `${userData.id}-${payload.name.firstName}`;
+    const path = file.path;
+    // sendImage to cloudinary
+    const {secure_url} = await sendImageToCloudinary(imageName, path);
+
+    // create a user
+    const newUser = await User.create([userData], {session});
+    
+    // create admin
+    if(!newUser.length) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create user');
+    }
+    // set id, _id as user
+    const newAdmin = await AdminModel.create([payload], {session});
+
+    if(!newAdmin.length){
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create admin')
+    }
+    await session.commitTransaction();
+    await session.endSession();
+    return newAdmin;
+  } catch (error: any) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw new Error( error)
+  }
+
+
+}
 
 const getMe = async (userId: string, role: string) => {
   let result = null;
