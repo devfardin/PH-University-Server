@@ -8,6 +8,7 @@ import { USER_ROLE } from './user.constant';
 import validationRequest from '../../app/middlewares/validateRequest';
 import { userValidation } from './user.validation';
 import { upload } from '../../app/utils/sendImageToCloudinary';
+import { AdminValidation } from '../Admin/admin.validation';
 const router = express.Router();
 
 router.post(
@@ -23,6 +24,18 @@ router.post(
 );
 // Create Faculty
 router.post('/create-faculty', userController.createFacultyIntoDB);
+
+// Create Admin
+router.post(
+  '/create-admin',
+  upload.single('file'),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data);
+    next();
+  },
+  validationRequest(AdminValidation.createAdminValidationSchema),
+  userController.createAdmin,
+);
 
 router.put(
   '/change-status/:id',

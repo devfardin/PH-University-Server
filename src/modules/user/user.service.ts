@@ -147,7 +147,7 @@ const createAdminIntoDB = async (
     const imageName = `${userData.id}-${payload.name.firstName}`;
     const path = file.path;
     // sendImage to cloudinary
-    const {secure_url} = await sendImageToCloudinary(imageName, path);
+    const result  = await sendImageToCloudinary(imageName, path);
 
     // create a user
     const newUser = await User.create([userData], {session});
@@ -157,6 +157,11 @@ const createAdminIntoDB = async (
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create user');
     }
     // set id, _id as user
+    payload.id = newUser[0].id;
+    payload.user = newUser[0]._id;
+    payload.profile = (result as { secure_url: string }).secure_url;
+    
+    // create admin
     const newAdmin = await AdminModel.create([payload], {session});
 
     if(!newAdmin.length){
@@ -170,8 +175,6 @@ const createAdminIntoDB = async (
     await session.endSession();
     throw new Error( error)
   }
-
-
 }
 
 const getMe = async (userId: string, role: string) => {
@@ -187,6 +190,7 @@ const getMe = async (userId: string, role: string) => {
   }
   return result;
 };
+
 const changeUserStatus = async (id: string, payload: { status: string }) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw new AppError(httpStatus.NOT_FOUND, 'Invalid ID');
@@ -206,4 +210,5 @@ export const userServices = {
   createFacultyIntoDB,
   getMe,
   changeUserStatus,
+  createAdminIntoDB,
 };
