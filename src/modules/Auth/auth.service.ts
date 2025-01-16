@@ -154,6 +154,8 @@ const refreshToken = async (token: string) => {
     accessToken,
   };
 };
+
+// Forgote password
 const forgetPassword = async (id: string) => {
   //   checking if the user is exist
   const isUserExist = await User.isUserExistsByCustomId(id);
