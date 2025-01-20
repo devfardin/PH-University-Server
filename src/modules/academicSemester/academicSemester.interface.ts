@@ -11,7 +11,7 @@ export type TMonths =
   | 'October'
   | 'November'
   | 'December';
-export type TAcademicSemsterName = 'Autumn' | 'Summar' | 'fall';
+export type TAcademicSemsterName = 'Autumn' | 'Summer' | 'Fall';
 export type TAcademicSemsterCode = '01' | '02' | '03';
 export interface TAcademicSemseter {
   name: TAcademicSemsterName;
