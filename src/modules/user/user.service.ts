@@ -34,7 +34,7 @@ const createUsersIntoDB = async (password: string, payload: TStudent, file: any 
   );
 
   if (!admisstionSemester) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Admition id not found');
+    throw new AppError(httpStatus.NOT_FOUND, 'Academic Semester id not found');
   }
 
   const session = await mongoose.startSession();

@@ -31,6 +31,7 @@ const createStudentValidationSchema = z.object({
       email: z.string().email(),
       contactNo: z.string(),
       emergencyContactNo: z.string(),
+      bloodGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
       presentAddress: z.string(),
       permanentAddress: z.string(),
       guardian: guardianValidationSchema,
@@ -75,6 +76,9 @@ const UpdateStudentValidationSchema = z.object({
       email: z.string().email().optional(),
       contactNo: z.string().optional(),
       emergencyContactNo: z.string().optional(),
+      bloogGroup: z
+        .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+        .optional(),
       presentAddress: z.string().optional(),
       permanentAddress: z.string().optional(),
       guardian: UpdateGuardianValidationSchema.optional(),
