@@ -5,11 +5,11 @@ import httpStatus from 'http-status';
 import catchAsync from '../../app/utils/catchAsync';
 
 const createNewUser: RequestHandler = async (req, res, next) => {
+  const { password, student: studentData } = req.body;
   try {
-    const userInfo = req.body;
     const result = await userServices.createUsersIntoDB(
-      userInfo.password,
-      userInfo,
+      password,
+      studentData,
       req.file,
     );
 

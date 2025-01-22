@@ -9,17 +9,18 @@ import validationRequest from '../../app/middlewares/validateRequest';
 import { userValidation } from './user.validation';
 import { upload } from '../../app/utils/sendImageToCloudinary';
 import { AdminValidation } from '../Admin/admin.validation';
+import { StudentValidations } from '../student/student.validation';
 const router = express.Router();
 
 router.post(
   '/create-student',
-  // auth(USER_ROLE.faculty),
+  auth(USER_ROLE.admin),
   upload.single('file'),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
     next();
   },
-  // validationRequest()
+  // validationRequest(StudentValidations.createStudentValidationSchema),
   userController.createNewUser,
 );
 // Create Faculty

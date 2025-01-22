@@ -30,7 +30,7 @@ const createUsersIntoDB = async (password: string, payload: TStudent, file: any 
 
   // Find Academic semester info
   const admisstionSemester = await AcademicSemester.findById(
-    payload.addmissionSemester,
+    payload?.addmissionSemester,
   );
 
   if (!admisstionSemester) {
